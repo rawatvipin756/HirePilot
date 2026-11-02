@@ -1,11 +1,14 @@
 import {useState} from "react";
 import api from "../services/api";
+import {useNavigate} from "react-router-dom";
 
 function Login(){
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit=async (e)=> {
     e.preventDefault();
@@ -18,8 +21,7 @@ function Login(){
       });
       setMessage("Login successful!");
       localStorage.setItem("token", response.data.token);
-      const profileResponse = await api.get("/auth/profile");
-console.log(profileResponse.data);
+      navigate("/dashboard");
       console.log(response.data);
     }catch(error){
       setError(error.response?.data?.message || "Login failed");
@@ -56,7 +58,7 @@ console.log(profileResponse.data);
 
           <button
             type="submit"
-            className="w-full p-3 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 font-semibold"
+            className="w-full p-3 rounded-lg bg-linear-to-r from-indigo-500 to-purple-600 font-semibold"
           >
             Sign In
           </button>

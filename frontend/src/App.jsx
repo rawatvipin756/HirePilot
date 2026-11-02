@@ -1,18 +1,16 @@
-import "tailwindcss";
+import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 
 function App() {
-  return <Signup />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
-
-// function App() {
-//   return (
-//     <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-//       <h1 className="text-4xl font-bold text-white">
-//         Welcome to HirePilot
-//       </h1>
-//     </div>
-//   )
-// }
 
 export default App;

@@ -30,7 +30,7 @@ function Sidebar(){
         <Link to="/dashboard" className="text-gray-300 hover:text-white">
           Dashboard
         </Link>
-        <Link to="#" className="text-gray-300 hover:text-white">
+        <Link to="/resume-analyzer" className="text-gray-300 hover:text-white">
           Resume Analyzer
         </Link>
         <Link to="#" className="text-gray-300 hover:text-white">

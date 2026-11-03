@@ -1,8 +1,9 @@
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import ProtectedRoute from "./components/proectedRoute";
+import ProtectedRoute from "./components/ProectedRoute";
 import Dashboard from "./pages/Dashboard";
+import ResumeAnalyzer from "./pages/ResumeAnalyzer";
 
 function App() {
   return (
@@ -15,6 +16,12 @@ function App() {
             <Dashboard/>
           </ProtectedRoute>
         }/>
+        <Route path="/resume-analyzer" element={
+            <ProtectedRoute>
+              <ResumeAnalyzer />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   )

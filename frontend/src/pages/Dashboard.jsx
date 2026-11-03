@@ -19,11 +19,6 @@ function Dashboard() {
     fetchProfile();
   },[]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
-
   return (
     <div className="min-h-screen bg-[#080b1a] text-white flex items-center justify-center">
       <Sidebar/>
@@ -97,10 +92,6 @@ function Dashboard() {
               </div>
 
             </div>
-            <button
-              onClick={handleLogout}
-              className="mt-6 px-6 py-3 rounded-lg bg-red-500 hover:bg-red-600 font-semibold"
-            >Logout</button>
           </div>
         </div>
       </main>

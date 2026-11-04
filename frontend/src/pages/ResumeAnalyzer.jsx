@@ -1,7 +1,9 @@
 import { useState } from "react";
+import api from "../services/api";
 
 function ResumeAnalyzer() {
   const [resume, setResume] = useState(null);
+
   const handleFileChange=(e)=> {
     const file=e.target.files[0];
     if(!file) return;
@@ -17,6 +19,18 @@ function ResumeAnalyzer() {
     }
     setResume(file);
   }
+
+  const handleUpload=async ()=> {
+    const formData=new FormData();
+    formData.append("resume",resume);
+    try{
+      const response=await api.post("/resume/upload",formData);
+      console.log(response.data);
+    }catch(error){
+      console.log(error.response?.data || error.message);
+    }
+  }
+
   return(
     <div className="min-h-screen bg-[#080bla] text-white p-8">
       <h1 className="text-3xl font-bold text-blue-400">AI Resume Analyzer</h1>
@@ -32,6 +46,7 @@ function ResumeAnalyzer() {
           </p>
         )}
         <button
+          onClick={handleUpload}
           disabled={!resume}
           className="mt-6 rounded-lg bg-indigo-600 px-6 py-3 font-semibold text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50 transition"
         >

@@ -76,10 +76,10 @@ function ResumeAnalyzer() {
         </button>
         <button
           onClick={handleAnalyze}
-          disabled={!resumeText}
+          disabled={!resumeText || loading}
           className="mt-4 rounded-lg bg-purple-600 px-6 py-3 text-white hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          Analyze Resume
+          {loading ? "Analyzing..." : "Analyze Resume"}
         </button>
       </div>
       {error && (

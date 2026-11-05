@@ -3,6 +3,10 @@ import api from "../services/api";
 
 function ResumeAnalyzer() {
   const [resume, setResume] = useState(null);
+  const [resumeText, setResumeText] = useState("");
+  const [analysis, setAnalysis] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange=(e)=> {
     const file=e.target.files[0];
@@ -25,14 +29,32 @@ function ResumeAnalyzer() {
     formData.append("resume",resume);
     try{
       const response=await api.post("/resume/upload",formData);
-      console.log(response.data);
+      setResumeText(response.data.extractedText);
+      console.log("Resume text extracted successfully!");
     }catch(error){
       console.log(error.response?.data || error.message);
     }
   }
 
+  const handleAnalyze=async()=> {
+    setLoading(true);
+    try{
+      setError("");
+      const response=await api.post("/resume/analyze",{
+        resumeText:resumeText,
+      });
+      setAnalysis(response.data.analysis);
+    }catch(error){
+      setError(
+        error.response?.data.message || "Something went wrong. Please try again"
+      );
+    }finally{
+      setLoading(false);
+    }
+  };
+
   return(
-    <div className="min-h-screen bg-[#080bla] text-white p-8">
+    <div className="min-h-screen bg-[#080b1a] text-white p-8">
       <h1 className="text-3xl font-bold text-blue-400">AI Resume Analyzer</h1>
       <p className="text-gray-400">Upload your resume and get AI-powered feedback.</p>
 
@@ -52,7 +74,30 @@ function ResumeAnalyzer() {
         >
           Upload Resume
         </button>
+        <button
+          onClick={handleAnalyze}
+          disabled={!resumeText}
+          className="mt-4 rounded-lg bg-purple-600 px-6 py-3 text-white hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Analyze Resume
+        </button>
       </div>
+      {error && (
+        <div className="mt-6 max-w-2xl rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-red-400">
+          {error}
+        </div>
+      )}
+      {analysis && (
+        <div className="mt-10 max-w-2xl rounded-2xl border border-purple-500/30 bg-white/5 p-6">
+          <h2 className="mb-4 text-2xl font-bold text-purple-400">
+            AI Resume Analysis
+          </h2>
+
+          <p className="whitespace-pre-wrap leading-7 text-gray-300">
+            {analysis}
+          </p>
+        </div>
+      )}
     </div>
   )
 }

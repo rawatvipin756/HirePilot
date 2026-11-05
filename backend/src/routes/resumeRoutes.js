@@ -1,3 +1,4 @@
+const {analyzeResume}=require("../controller/resumeController");
 const express=require("express");
 const router=express.Router();
 const { PDFParse } = require("pdf-parse");
@@ -20,5 +21,7 @@ router.post("/upload",authMiddleware,upload.single("resume"),async (req,res)=> {
     extractedText: data.text,
   });
 });
+
+router.post("/analyze", authMiddleware, analyzeResume);
 
 module.exports = router;
